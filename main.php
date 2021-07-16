@@ -16,12 +16,12 @@ $redis->connect(REDIS_IP, REDIS_PORT);
 
 // Composer
 require_once 'vendor/autoload.php';
-use GraphAware\Neo4j\Client\ClientBuilder;  // (graphaware/neo4j-php-client)
+use Laudis\Neo4j\ClientBuilder;  // (graphaware/neo4j-php-client)
 
 // Neo4j
 $neo = ClientBuilder::create()
-                    ->addConnection('default', 'bolt://'.NEO4J_USER.':'.NEO4J_PASS.'@'.NEO4J_IP.':'.NEO4J_PORT)
-                    ->setDefaultTimeout(0)
+                    ->withDriver('bolt', 'bolt+s://'.NEO4J_USER.':'.NEO4J_PASS.'@'.NEO4J_IP.':'.NEO4J_PORT)
+                    ->withDefaultDriver('bolt')
                     ->build(); // NOTE: set timeout to 0 (so it does not timeout on huge transactions)
 
 // Create Neo4j constraints (for unique indexes, not regular indexes (should be faster))
